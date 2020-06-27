@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>{{ title }}</h3>
+<form name="view-patient" action="" method="POST">
+    <label for="patient_id">Patient ID* </label>
+    <input type="text" name="patient_id" id="patient_id" required>
+    <button type="submit">Find</button>
+</form>
+
+<form name="show-patients" action="">
+    <label for="p_name">Patient Name</label>
+    <input type="text" name="p_name" id="p_name" readonly><br>
+
+    <label for="p_name">Patient Name</label>
+    <input type="text" name="p_name" id="p_name" readonly><br>
+
+    <label for="age">Patient Age</label>
+    <input type="text" name="age" id="age" readonly><br>
+
+    <label for="doa">Date of admission</label>
+    <input type="text" name="doa" id="doa" readonly><br>
+
+    <label for="bed">type of bed</label>
+    <input type="text" name="bed" id="bed" readonly><br>
+
+    <label for="address">Address</label>
+    <input type="textarea" name="address" id="address" readonly><br>
+
+    <label for="state">State</label>
+    <input type="text" name="state" id="state" readonly><br>
+
+    <label for="city">City</label>
+    <input type="text" name="city" id="city" readonly><br>
+
+    <p>* Mandatory</p>
+</form>
+
+{% endblock %}

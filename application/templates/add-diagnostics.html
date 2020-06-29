@@ -1,1 +1,90 @@
-{% extend base %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h3>{{ title }}</h3>
+    <table class="table table-bordered" style="width: 90%;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Patient ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Address</th>
+                <th scope="col">DOJ</th>
+                <th scope="col">Type of room</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <tr>
+                <td scope="row">
+                    <form name="search-patient" action="" method="POST">
+                        <input type="number" name="patient_id" id="patient_id" placeholder="{{ patient['ws_pat_id'] }}"
+                            required>
+                        <button type="submit" class="btn btn-dark btn-sm">Find</button>
+                    </form>
+                </td>
+                <td>{{ patient['ws_pat_name'] }}</td>
+                <td>{{ patient['ws_age'] }}</td>
+                <td>{{ patient['ws_adrs'] }}</td>
+                <td>{{ patient['ws_doj'] }}</td>
+                <td>{{ patient['ws_rtype'] }}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    {% if diagnostic %}
+
+    <h3>Diagnostics Conducted</h3>
+    <table class="table table-bordered" style="width: 50%;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name of the Test</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for issued, cost in diag_issued.items() %}
+            <tr>
+                <td scope="row">{{ issued }}</td>
+                <td>{{ cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <h3>Add Diagnostic</h3>
+    <table class="table table-bordered" style="width: 50%;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name of the Test</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+        <button type="submit" class="btn btn-dark" style="position: absolute;
+    left: 52%;">Add</button>
+        <tbody>
+
+            {% for diag in diagnostic %}
+            <tr>
+                <td scope="row">{{ diag['ws_diagn'] }}</td>
+                <td>{{ diag['ws_test_charge'] }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="text-centre">
+        <button type="button" class="btn btn-dark btn-lg">Update</button>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

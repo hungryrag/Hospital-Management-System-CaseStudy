@@ -1,39 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3>{{ title }}</h3>
-<form name="view-patient" action="" method="POST">
-    <label for="patient_id">Patient ID* </label>
-    <input type="number" name="patient_id" id="patient_id" required>
-    <button type="submit">Find</button>
+<div class="container">
+    <h3>{{ title }}</h3>
+    <form name="view-patient" action="" method="POST">
+        <div class="form-group">
+            <label for="patient_id">Patient ID* </label>
+            <input type="number" name="patient_id" id="patient_id" placeholder="{{ patient['ws_pat_id'] }}" required>
+            <button type="submit" class="btn btn-dark btn-sm">Find</button>
+        </div>
+    </form>
+
+    <form name="show-patients" action="">
+        <div class="form-group">
+            <label for="p_name">Patient Name</label>
+            <input type="text" name="p_name" id="p_name" value="{{ patient['ws_pat_name'] }}" readonly><br>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Patient Age</label>
+            <input type="text" name="age" id="age" value="{{ patient['ws_age'] }}" readonly><br>
+        </div>
+
+        <div class="form-group">
+            <label for="doa">Date of admission</label>
+            <input type="text" name="doa" id="doa" value="{{ patient['ws_doj'] }}" readonly><br>
+        </div>
+
+        <div class="form-group">
+            <label for="bed">Type of bed</label>
+            <input type="text" name="bed" id="bed" value="{{ patient['ws_rtype'] }}" readonly><br>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea name="address" id="address" rows="4" cols="50" readonly>{{ patient['ws_adrs'] }}</textarea><br>
+        </div>
+
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" name="state" id="state" value="{{ patient['patient_state'] }}" readonly><br>
+        </div>
+
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" value="{{ patient['patient_city'] }}" readonly><br>
+        </div>
+        <p>* Mandatory</p>
+</div>
 </form>
-
-<form name="show-patients" action="">
-    <label for="p_name">Patient Name</label>
-    <input type="text" name="p_name" id="p_name" value="{{ patient['ws_pat_id'] }}" readonly><br>
-
-    <label for="p_name">Patient Name</label>
-    <input type="text" name="p_name" id="p_name" value="{{ patient['ws_pat_name'] }}" readonly><br>
-
-    <label for="age">Patient Age</label>
-    <input type="text" name="age" id="age" value="{{ patient['ws_age'] }}" readonly><br>
-
-    <label for="doa">Date of admission</label>
-    <input type="text" name="doa" id="doa" value="{{ patient['ws_doj'] }}" readonly><br>
-
-    <label for="bed">Type of bed</label>
-    <input type="text" name="bed" id="bed" value="{{ patient['ws_rtype'] }}" readonly><br>
-
-    <label for="address">Address</label>
-    <textarea name="address" id="address" rows="4" cols="50" readonly>{{ patient['ws_adrs'] }}</textarea><br>
-
-    <label for="state">State</label>
-    <input type="text" name="state" id="state" value="{{ patient['patient_state'] }}" readonly><br>
-
-    <label for="city">City</label>
-    <input type="text" name="city" id="city" value="{{ patient['patient_city'] }}" readonly><br>
-
-    <p>* Mandatory</p>
-</form>
-
+</div>
 {% endblock %}

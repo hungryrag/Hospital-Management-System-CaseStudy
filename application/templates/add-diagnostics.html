@@ -68,8 +68,16 @@
                 <th scope="col">Amount</th>
             </tr>
         </thead>
-        <button type="submit" class="btn btn-dark" style="position: absolute;
-    left: 52%;">Add</button>
+
+        <div>
+            <select name="diag" id="diag" style="position: absolute; left: 52%;">
+                {% for diag in diagnostic %}
+                <option value="{{ diag['ws_test_id'] }}">{{ diag['ws_diagn'] }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-dark" style="position: absolute; left: 58%;" onclick="selectDiag()">Add</button>
+        </div>
+
         <tbody>
 
             {% for diag in diagnostic %}
@@ -81,10 +89,29 @@
 
         </tbody>
     </table>
+
     <div class="text-centre">
-        <button type="button" class="btn btn-dark btn-lg">Update</button>
+        <form action="{{ url_for('updateSuccess') }}" method="POST">
+            <input type="hidden" name="patient_id" id="patient_id" value="{{ patient['ws_pat_id'] }}">
+            <input class="btn btn-dark btn-lg" type="submit" name="test_id" id="test_id"
+                onclick="this.value=selectDiag()">
+            <!-- <button type="submit" class="btn btn-dark btn-lg">Update</button> -->
+        </form>
+
     </div>
 </div>
+
+<script>
+    document.getElementById("test_id").disabled = true;
+
+    function selectDiag() {
+        document.getElementById("test_id").disabled = false;
+        var e = document.getElementById("diag");
+        var value = e.options[e.selectedIndex].value;
+        return value;
+    }
+
+</script>
 {% endif %}
 
 {% endblock %}

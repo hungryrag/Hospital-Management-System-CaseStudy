@@ -1,6 +1,13 @@
-from application import app
+from application import app, db
 from flask import render_template, flash, jsonify, request, redirect, url_for
-from application.models import User, Patient, Medicine, Diagnostic
+from application.models import (
+    User,
+    Patient,
+    Medicine,
+    Diagnostic,
+    DiagsIssue,
+    MedsIssue,
+)
 from application.schema import (
     users_schema,
     patients_schema,
@@ -34,7 +41,7 @@ def viewPatient():
 
 
 @app.route("/add-diagnostics", methods=["GET", "POST"])
-def addDiagonostics():
+def addDiagnostics():
     if request.method == "POST":
         patient_id = request.form.get("patient_id")
         patient = Patient.query.filter_by(ws_pat_id=patient_id).first()
@@ -76,13 +83,23 @@ def addDiagonostics():
         )
 
 
-@app.route("/update-diagnostics", methods=["GET", "POST"])
-@app.route("/update-diagnostics/<patient_id>", methods=["GET", "POST"])
-def updateDiagnostics(patient_id):
-    patient_id = request.args.get("patient_id")
-    print(patient_id)
-    patient = Patient.query.filter_by(ws_pat_id=patient_id).first()
-    return render_template(
-        "update-diagnostics.html", title="Diagnostics", patient=patient
-    )
+@app.route("/update-success", methods=["GET", "POST"])
+def updateSuccess():
+    if request.method == "POST":
+        patient_id = request.form.get("patient_id")
+        # print(patient_id)
+        test_id = request.form.get("test_id")
+        # print(test_id)
 
+        patient = Patient.query.filter_by(ws_pat_id=patient_id).first()
+        diagnostic = Diagnostic.query.filter_by(ws_test_id=test_id).first()
+
+        diag_issue = DiagsIssue()
+        diag_issue.diagnostic_issued = diagnostic
+        patient.diagnostics.append(diag_issue)
+
+        db.session.commit()
+        flash("Updated Successfully!", "success")
+        return render_template("update-success.html")
+    else:
+        return redirect(url_for("addDiagnostics"))
